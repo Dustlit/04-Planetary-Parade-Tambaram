@@ -58,15 +58,24 @@
         .ticket h2 {
             font-size: 24px;
             color: #007bff;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
-        .ticket p {
+        .ticket .details {
+            display: grid;
+            grid-template-columns: 150px 1fr; /* Adjust the first column width as needed */
+            gap: 10px;
             font-size: 16px;
-            margin: 5px 0;
+        }
+        .ticket .details strong {
+            font-weight: bold;
         }
         .ticket .qr-code {
             margin-top: 20px;
             text-align: center;
+        }
+        /* Add this class for red text */
+        .red-text {
+            color: red;
         }
     </style>
     <!-- Load qrcode.js locally -->
@@ -83,14 +92,20 @@
             <a href="https://maps.app.goo.gl/eQhj56Gcc4xu9NK88" target="_blank" style="color: #000000;">Dustlit - Planets Observation, Tambaram</a>
         </p>
         <div class="ticket">
+            <!-- Add the screenshot instruction here -->
+            <h2><strong>Please take a screenshot of this ticket for entry.</strong></h2>
+
             <h2>Your Event Ticket</h2>
-            <p><strong>Name:</strong> <span id="ticketName"></span></p>
-            <p><strong>Phone Number:</strong> <span id="ticketPhone"></span></p>
-            <p><strong>Attendees:</strong> <span id="ticketAttendees"></span></p>
-            <p><strong>Kids (Under 10):</strong> <span id="ticketKids"></span></p>
-            <p><strong>Total Amount:</strong> ₹<span id="ticketAmount"></span></p>
-            <p><strong>Event Date:</strong> <span id="ticketEventDate"></span></p>
-            <p><strong>Registration Time:</strong> <span id="ticketTime"></span></p>
+            <div class="details">
+                <strong>Name:</strong> <span id="ticketName" class="red-text"></span>
+                <strong>Phone Number:</strong> <span id="ticketPhone" class="red-text"></span>
+                <strong>Attendees:</strong> <span id="ticketAttendees" class="red-text"></span>
+                <strong>Kids (Under 10):</strong> <span id="ticketKids" class="red-text"></span>
+                <strong>Total Amount:</strong> <span id="ticketAmount" class="red-text"></span>
+                <strong>Event Date:</strong> <span id="ticketEventDate" class="red-text"></span>
+                <strong>Registration Time:</strong> <span id="ticketTime" class="red-text"></span>
+            </div>
+            
             <div class="qr-code" id="qrCode"></div>
         </div>
     </div>
@@ -108,7 +123,7 @@
         document.getElementById('ticketPhone').textContent = phone;
         document.getElementById('ticketAttendees').textContent = attendees;
         document.getElementById('ticketKids').textContent = kids;
-        document.getElementById('ticketAmount').textContent = amount;
+        document.getElementById('ticketAmount').textContent = `₹${amount}`;
         document.getElementById('ticketEventDate').textContent = eventDate;
         document.getElementById('ticketTime').textContent = time;
 
