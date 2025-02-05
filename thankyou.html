@@ -69,12 +69,11 @@
             text-align: center;
         }
     </style>
-    <!-- Include QRCode.js library -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Load qrcode.js locally -->
+    <script src="qrcode.js"></script>
 </head>
 <body>
     <div class="message-box">
-        <!-- Dustlit logo -->
         <img src="logo.png" alt="Dustlit Logo" class="logo">
         <h1>Thank You!</h1>
         <p>Your registration for the Planetary Parade event has been successfully submitted.</p>
@@ -83,8 +82,6 @@
             <strong>Location:</strong> <br>
             <a href="https://maps.app.goo.gl/eQhj56Gcc4xu9NK88" target="_blank" style="color: #000000;">Dustlit - Planets Observation, Tambaram</a>
         </p>
-
-        <!-- Ticket Section -->
         <div class="ticket">
             <h2>Your Event Ticket</h2>
             <p><strong>Name:</strong> <span id="ticketName"></span></p>
@@ -97,12 +94,8 @@
             <div class="qr-code" id="qrCode"></div>
         </div>
     </div>
-
     <script>
-        // Retrieve query parameters from the URL
         const urlParams = new URLSearchParams(window.location.search);
-
-        // Decode the query parameters
         const name = decodeURIComponent(urlParams.get('name') || '');
         const phone = decodeURIComponent(urlParams.get('phone') || '');
         const attendees = decodeURIComponent(urlParams.get('attendees') || '');
@@ -111,7 +104,6 @@
         const eventDate = decodeURIComponent(urlParams.get('event_date') || '');
         const time = decodeURIComponent(urlParams.get('time') || '');
 
-        // Populate ticket details
         document.getElementById('ticketName').textContent = name;
         document.getElementById('ticketPhone').textContent = phone;
         document.getElementById('ticketAttendees').textContent = attendees;
@@ -120,27 +112,21 @@
         document.getElementById('ticketEventDate').textContent = eventDate;
         document.getElementById('ticketTime').textContent = time;
 
-        // Generate QR Code
-        const qrData = `
-            Name: ${name}
-            Phone: ${phone}
-            Attendees: ${attendees}
-            Kids: ${kids}
-            Amount: ₹${amount}
-            Event Date: ${eventDate}
-            Registration Time: ${time}
-        `;
+        // Generate a QR code with the registration details
+        const qrData = `Name: ${name}\nPhone: ${phone}\nAttendees: ${attendees}\nKids: ${kids}\nAmount: ₹${amount}\nEvent Date: ${eventDate}\nTime: ${time}`;
+        console.log("QR Data:", qrData); // Debugging
 
-        // Ensure the QR code container is empty before generating a new one
-        const qrCodeContainer = document.getElementById("qrCode");
-        qrCodeContainer.innerHTML = ''; // Clear previous content
+        const qrCodeElement = document.getElementById("qrCode");
 
-        // Generate the QR code
-        new QRCode(qrCodeContainer, {
-            text: qrData,
-            width: 128,
-            height: 128,
-        });
+        if (qrCodeElement && qrData.trim()) {
+            new QRCode(qrCodeElement, {
+                text: qrData,
+                width: 200,
+                height: 200
+            });
+        } else {
+            console.error("QR Code element not found or data is empty.");
+        }
     </script>
 </body>
 </html>
